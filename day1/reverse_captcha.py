@@ -5,11 +5,20 @@ input_values = "3499774489291465329682787161338855299363493517373359747499739343
 # get a list of integers from the input string
 input_values = [int(v) for v in input_values]
 
+part2 = True
+
+def get_cmp_index(values, i):
+	if part2:
+		i = i + (len(values) / 2)
+	else:
+		i += 1
+        return i % len(values)
+
 def matches(values):
 	"""For each value in the list, yield only those who match the next value
 	in the list. For the last value, compare with the first."""
 	for i in range(len(values)):
-		if values[i] == values[0 if i+1 == len(values) else i+1]:
+		if values[i] == values[get_cmp_index(values, i)]:
 			yield values[i]
 
 print "reverse captcha: %d" % sum(matches(input_values))
